@@ -56,6 +56,12 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>8.0.32</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-hibernate-53</artifactId>
+            <version>3.19.0</version>
+        </dependency>
     </dependencies>
 
     <build>

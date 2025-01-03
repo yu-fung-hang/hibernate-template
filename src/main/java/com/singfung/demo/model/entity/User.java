@@ -5,7 +5,9 @@ import com.singfung.demo.model.dto.UserDTO;
 import com.singfung.demo.model.enumeration.UserStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.beans.BeanUtils;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,6 +19,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "demo_user")
+@Cache(region = "hibernate-template.user", usage = CacheConcurrencyStrategy.READ_WRITE)
 @Data
 @NoArgsConstructor
 public class User {
