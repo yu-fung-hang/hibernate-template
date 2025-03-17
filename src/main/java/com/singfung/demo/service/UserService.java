@@ -70,7 +70,9 @@ public class UserService {
     }
 
     public List<User> listAllUsers() {
-        return userRepository.findByOrderByIdDesc();
+        List<User> result = userRepository.findByOrderByIdDesc();
+
+        return result;
     }
 
     public User getUserById(Integer id) {
