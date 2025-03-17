@@ -1,8 +1,11 @@
 package com.singfung.demo.service;
 
+import com.singfung.demo.model.dto.AddressDTO;
 import com.singfung.demo.model.dto.UserDTO;
+import com.singfung.demo.model.entity.Address;
 import com.singfung.demo.model.entity.User;
 import com.singfung.demo.model.enumeration.UserStatus;
+import com.singfung.demo.repository.AddressRepository;
 import com.singfung.demo.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -22,10 +26,12 @@ import java.util.Optional;
 @Service
 public class UserService {
     private UserRepository userRepository;
+    private AddressRepository addressRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AddressRepository addressRepository) {
         this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
     }
 
     public User addUser(UserDTO dto) {
@@ -44,6 +50,22 @@ public class UserService {
         user.setTs(new Date());
 
         user = userRepository.save(user);
+
+        List<AddressDTO> addressDTOList = dto.getAddressList();
+        List<Address> addressList = new ArrayList<>();
+        for (AddressDTO addressDTO : addressDTOList) {
+            Address address = new Address();
+            BeanUtils.copyProperties(addressDTO, address);
+            address.setCreateTime(new Date());
+            address.setTs(new Date());
+            address.setUser(user);
+            addressList.add(address);
+        }
+
+        if (addressList.size() > 0) {
+            addressRepository.saveAll(addressList);
+        }
+
         return user;
     }
 
