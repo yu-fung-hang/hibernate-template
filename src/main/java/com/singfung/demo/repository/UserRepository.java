@@ -1,6 +1,7 @@
 package com.singfung.demo.repository;
 
 import com.singfung.demo.model.entity.User;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -21,11 +22,14 @@ public interface UserRepository extends JpaRepository<User, Serializable>
     User findByEmail(String email);
 
     // N+1 SELECT problem
-    List<User> findByOrderByIdDesc();
+    //List<User> findByOrderByIdDesc();
 
     // solution 1
-    @Query("select u from User u left join fetch u.addressList order by u.id desc ")
+    @Query("select distinct u from User u left join fetch u.addressList order by u.id desc ")
     List<User> findAllWithEagerRelationships();
+
+    @EntityGraph(attributePaths = {"addressList"})
+    List<User> findByOrderByIdDesc();
 
     User findByUsernameAndIdNot(String username, Integer id);
 

@@ -76,8 +76,14 @@ public class UserService {
     }
 
     // solution 1
-    public List<User> listAllUsersWithoutNPlusOne() {
+    public List<User> listAllUsersSolution1() {
         List<User> result = userRepository.findAllWithEagerRelationships();
+        return result;
+    }
+
+    // solution 2
+    public List<User> listAllUsersSolution2() {
+        List<User> result = userRepository.findByOrderByIdDesc();
         return result;
     }
 

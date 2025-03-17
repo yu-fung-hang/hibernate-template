@@ -35,9 +35,14 @@ public class UserController {
         return userService.listAllUsers();
     }
 
-    @GetMapping("/n_plus_1_solution")
-    public List<User> getNPlus1Solution() {
-        return userService.listAllUsersWithoutNPlusOne();
+    @GetMapping("/solution1")
+    public List<User> getAllUsersSolution1() {
+        return userService.listAllUsersSolution1();
+    }
+
+    @GetMapping("/solution2")
+    public List<User> getAllUsersSolution2() {
+        return userService.listAllUsersSolution2();
     }
 
     @GetMapping("/{id}")
