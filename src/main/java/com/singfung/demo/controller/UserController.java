@@ -35,6 +35,11 @@ public class UserController {
         return userService.listAllUsers();
     }
 
+    @GetMapping("/n_plus_1_solution")
+    public List<User> getNPlus1Solution() {
+        return userService.listAllUsersWithoutNPlusOne();
+    }
+
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Integer id) {
         return userService.getUserById(id);

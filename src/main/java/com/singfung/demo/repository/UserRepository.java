@@ -2,6 +2,7 @@ package com.singfung.demo.repository;
 
 import com.singfung.demo.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
@@ -19,7 +20,12 @@ public interface UserRepository extends JpaRepository<User, Serializable>
 
     User findByEmail(String email);
 
+    // N+1 SELECT problem
     List<User> findByOrderByIdDesc();
+
+    // solution 1
+    @Query("select u from User u left join fetch u.addressList order by u.id desc ")
+    List<User> findAllWithEagerRelationships();
 
     User findByUsernameAndIdNot(String username, Integer id);
 
