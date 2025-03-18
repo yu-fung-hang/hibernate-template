@@ -25,6 +25,7 @@ public interface UserRepository extends JpaRepository<User, Serializable>
     //List<User> findByOrderByIdDesc();
 
     // solution 1
+    //@Query("select u from User u left join fetch u.addressList order by u.id desc ")
     @Query("select distinct u from User u left join fetch u.addressList order by u.id desc ")
     List<User> findAllWithEagerRelationships();
 
