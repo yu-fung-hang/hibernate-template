@@ -74,6 +74,10 @@ public class UserService {
         if (addressList.size() > 0) {
             addressRepository.saveAll(addressList);
         }
+
+        if (1+1==2) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "I am an exception");
+        }
     }
 
     // N+1
