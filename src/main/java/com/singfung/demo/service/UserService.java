@@ -25,6 +25,8 @@ import java.util.Optional;
  */
 
 @Service
+//@Transactional(rollbackFor = Exception.class)
+@Transactional
 public class UserService {
     private UserRepository userRepository;
     private AddressRepository addressRepository;
@@ -35,7 +37,6 @@ public class UserService {
         this.addressRepository = addressRepository;
     }
 
-    @Transactional
     public User addUser(UserDTO dto) {
         if(userRepository.findByUsername(dto.getUsername()) != null) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "username has been registered");
@@ -53,11 +54,13 @@ public class UserService {
 
         user = userRepository.save(user);
 
-        if (1 + 1 == 2) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "I am an exception");
-        }
-
         List<AddressDTO> addressDTOList = dto.getAddressList();
+        saveAddress(addressDTOList, user);
+
+        return user;
+    }
+
+    public void saveAddress(List<AddressDTO> addressDTOList, User user) {
         List<Address> addressList = new ArrayList<>();
         for (AddressDTO addressDTO : addressDTOList) {
             Address address = new Address();
@@ -71,8 +74,6 @@ public class UserService {
         if (addressList.size() > 0) {
             addressRepository.saveAll(addressList);
         }
-
-        return user;
     }
 
     // N+1
