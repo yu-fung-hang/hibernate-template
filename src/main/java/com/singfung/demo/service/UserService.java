@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class UserService {
         this.addressRepository = addressRepository;
     }
 
+    @Transactional
     public User addUser(UserDTO dto) {
         if(userRepository.findByUsername(dto.getUsername()) != null) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "username has been registered");
@@ -50,6 +52,10 @@ public class UserService {
         user.setTs(new Date());
 
         user = userRepository.save(user);
+
+        if (1 + 1 == 2) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "I am an exception");
+        }
 
         List<AddressDTO> addressDTOList = dto.getAddressList();
         List<Address> addressList = new ArrayList<>();
