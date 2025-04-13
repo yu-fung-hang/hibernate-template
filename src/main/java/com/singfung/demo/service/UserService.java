@@ -56,6 +56,10 @@ public class UserService {
         List<AddressDTO> addressDTOList = dto.getAddressList();
         saveAddress(addressDTOList, user);
 
+//        if (1+1==2) {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "I am an exception");
+//        }
+
         return user;
     }
 
