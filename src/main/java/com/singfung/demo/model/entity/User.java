@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author sing-fung
@@ -44,6 +45,9 @@ public class User {
     @Column(name = "ts", nullable = false, length = 50)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date ts;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    List<Address> addressList;
 
     public User(UserDTO dto) {
         BeanUtils.copyProperties(dto, this);
