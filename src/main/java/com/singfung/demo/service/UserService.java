@@ -52,6 +52,10 @@ public class UserService {
         user.setTs(new Date());
 
         user = userRepository.save(user);
+
+        List<AddressDTO> addressDTOList = dto.getAddressList();
+        saveAddress(addressDTOList, user);
+
         return user;
     }
 
