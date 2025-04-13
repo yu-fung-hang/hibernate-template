@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * @author sing-fung
@@ -22,6 +23,8 @@ public class UserDTO
     @Email(message = "invalid email format", groups = {Insert.class, Update.class})
     @NotBlank(message = "email cannot be empty", groups = {Insert.class, Update.class})
     String email;
+
+    List<AddressDTO> addressList;
 
     public interface Update {}
 
