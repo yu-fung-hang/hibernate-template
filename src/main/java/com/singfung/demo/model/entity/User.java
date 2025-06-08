@@ -19,7 +19,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "demo_user")
-@Cache(region = "hibernate-template.user", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "hibernate-template.postgresql.user", usage = CacheConcurrencyStrategy.READ_WRITE)
 @Data
 @NoArgsConstructor
 public class User {
